@@ -1,0 +1,5 @@
+#!/bin/sh
+id=10
+notify-send -r $id -a "10%" -h int:value:10 "test1"
+sleep 1
+notify-send -r $id -a "20%" -h int:value:20 "test1"
