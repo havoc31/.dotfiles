@@ -1,0 +1,85 @@
+! DWM COLORS 
+dwm.normfgcolor: #ffffff
+dwm.normbgcolor: #000000
+dwm.normbordercolor: #444444
+dwm.normfloatcolor: #f05ff8
+
+dwm.selfgcolor: #eeeeee
+dwm.selbgcolor: #005577
+dwm.selbordercolor: #005577
+dwm.selfloatcolor: #005577
+
+dwm.titlenormfgcolor: #bbbbbb
+dwm.titlenormbgcolor: #222222
+dwm.titlenormbordercolor: #444444
+dwm.titlenormfloatcolor: #f05ff8
+
+dwm.titleselfgcolor: #eeeeee
+dwm.titleselbgcolor: #005577
+dwm.titleselbordercolor: #005577
+dwm.titleselfloatcolor: #005577
+
+dwm.tagsnormfgcolor: #ffffff
+dwm.tagsnormbgcolor: #000000
+dwm.tagsnormbordercolor: #444444
+dwm.tagsnormfloatcolor: #f05ff8
+
+dwm.tagsselfgcolor: #eeeeee
+dwm.tagsselbgcolor: #005577
+dwm.tagsselbordercolor: #005577
+dwm.tagsselfloatcolor: #005577
+
+dwm.hidnormfgcolor: #005577
+dwm.hidselfgcolor: #227799
+dwm.hidnormbgcolor: #222222
+dwm.hidselbgcolor: #222222
+
+dwm.urgfgcolor: #bbbbbb
+dwm.urgbgcolor: #222222
+dwm.urgbordercolor: #fe0100
+dwm.urgfloatcolor: #f05ff8
+
+! DMENU COLORS
+dmenu.background: #222222
+dmenu.foreground: #bbbbbb
+
+dmenu.selbackground: #eeeeee
+dmenu.selforeground: #005577
+
+dmenu.outbackground: #000000
+dmenu.outforeground: #00ffff
+
+dmenu.bordercolor: #005577
+
+dmenu.selhlbackground: #005577
+dmenu.selhlforeground: #f05ff8
+
+dmenu.hlbackground: #222222
+dmenu.hlforeground: #f05ff8
+
+! ST COLORS
+
+st.background: #000000
+st.foreground: #ffffff
+
+! 8 normal colors
+*.color0: #000000 
+*.color1: #fe0100
+*.color2: #33ff00
+*.color3: #feff00 
+*.color4: #0066ff
+*.color5: #cc00ff
+*.color6: #00ffff
+*.color7: #d0d0d0
+
+! 8 bright colors 
+*.color8: #808080
+*.color9: #fe0100
+*.color10: #33ff00
+*.color11: #feff00
+*.color12: #0066ff
+*.color13: #cc00ff
+*.color14: #00ffff
+*.color15: #ffffff
+
+
