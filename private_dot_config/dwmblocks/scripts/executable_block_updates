@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cupd=$(checkupdates | wc -l)
+icon="UPDATES:"
+printf "%s %s" "$icon" "$cupd"

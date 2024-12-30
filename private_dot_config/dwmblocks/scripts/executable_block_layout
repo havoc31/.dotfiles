@@ -1,0 +1,5 @@
+#!/bin/sh
+
+layout=$(xkblayout-state print "%s")
+icon="LANG:"
+printf "%s %s" "$icon" "$layout"

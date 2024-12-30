@@ -1,0 +1,15 @@
+#!/bin/sh
+
+vol="$(pulsemixer --get-volume | awk '{ print $1 }')" 
+mutted="$(pulsemixer --get-mute)"
+
+if [[ $mutted -eq "1" ]];
+then
+  mutted="[MUTE]"
+else
+  mutted=""
+fi
+
+info="$mutted $vol%"
+icon="VOL:"
+printf "%s %s" "$icon" "$info"

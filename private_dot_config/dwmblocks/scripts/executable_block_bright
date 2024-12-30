@@ -1,0 +1,5 @@
+#!/bin/sh
+
+bright=$(brightnessctl -d intel_backlight | grep '%' | awk '{print $4}' | sed 's/(//g' | sed 's/)//g' | sed 's/ //g')
+icon="BRIGHT:"
+printf "%s %s" "$icon" "$bright"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+info=""
+icon=""
+printf "%s %s" "$icon" "$info"
