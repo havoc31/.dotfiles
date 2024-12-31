@@ -34,7 +34,7 @@ if [[ "$bat_status" != "$bat_prev_status" ]]; then
     echo $bat_prev_status > /tmp/$bat_log_file
 fi
 
-if [[ $bat_status -eq "+" ]]; then
+if [[ $bat_status == "+" ]]; then
     status_color="^C2^"
 fi
 
