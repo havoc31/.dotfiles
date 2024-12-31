@@ -57,6 +57,7 @@ set history=20
 
 call plug#begin()
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'norcalli/nvim-colorizer.lua'
