@@ -11,15 +11,15 @@ else
   bat_status="+"
 fi 
 
-if [[ $bat_perc > 25 ]]; then
+if [[ $bat_perc -gt 25 ]]; then
     status_color="^C2^"
-elif [[ $bat_perc > 15 ]]; then
+elif [[ $bat_perc -gt 15 ]]; then
     status_color="^C3^"
 else
     status_color="^C1^"
 fi
 
-if [[ $bat_status == "+" ]]; then
+if [[ $bat_status -eq "+" ]]; then
     status_color="^C2^"
 fi
 
