@@ -4,4 +4,4 @@ id=9
 pulsemixer --change-volume +5
 
 curr_vol="$(pulsemixer --get-volume | awk '{ print $1 }')"
-notify-send -r $id -a "volume change" -h int:value:$curr_vol "Volume +"
+notify-send -r $id -a "volume change" -h int:value:$curr_vol "[$curr_vol%] Volume +"

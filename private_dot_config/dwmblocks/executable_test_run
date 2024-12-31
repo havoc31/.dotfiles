@@ -1,7 +1,0 @@
-#!/bin/sh
-sudo killall dwmblocks
-xsetroot -name ""
-DWMBLOCKS_PATH="$HOME/.config/dwmblocks/scripts"
-PATH="$PATH:$DWMBLOCKS_PATH" ./dwmblocks &
-
-
