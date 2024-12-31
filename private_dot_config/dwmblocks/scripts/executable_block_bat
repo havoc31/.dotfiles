@@ -1,8 +1,10 @@
 #!/bin/bash
 
 id=8
+bat_log_file="bat_status_log"
 bat_perc=$(cat /sys/class/power_supply/BAT0/capacity)
 bat_status=""
+bat_prev_status=$(tail -n 1 /tmp/$bat_log_file)
 
 # Check the battery status
 if [[ $(cat /sys/class/power_supply/BAT0/status) == "Discharging" ]]; then
@@ -11,12 +13,25 @@ else
   bat_status="+"
 fi 
 
-if [[ $bat_perc -gt 25 ]]; then
+if [[ $bat_perc -gt 50 ]]; then
     status_color="^C2^"
-elif [[ $bat_perc -gt 15 ]]; then
+    urgency="normal"
+elif [[ $bat_perc -gt 25 ]]; then
     status_color="^C3^"
+    urgency="low"
 else
     status_color="^C1^"
+    urgency="critical"
+fi
+
+if [[ "$bat_status" != "$bat_prev_status" ]]; then
+    if [[ "$bat_status" == "+" ]]; then
+        notify-send -r $id -a "battery" "Plugged"
+    else 
+        notify-send -r $id -u $urgency -a "battery" "Unplugged [$bat_perc%]"
+    fi
+    bat_prev_status=$bat_status
+    echo $bat_prev_status > /tmp/$bat_log_file
 fi
 
 if [[ $bat_status -eq "+" ]]; then
