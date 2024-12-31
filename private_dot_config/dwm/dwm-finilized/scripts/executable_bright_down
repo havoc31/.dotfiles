@@ -1,6 +1,0 @@
-#!/bin/sh
-
-id=10
-brightnessctl s 5%-
-curr_bright="$(brightnessctl | grep "%" | awk '{ print $4 }' | tr -d '(%)')"
-notify-send -r $id -a "brightness change" -h int:value:$curr_bright "Brightness -"
