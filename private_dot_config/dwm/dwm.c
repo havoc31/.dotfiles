@@ -1325,12 +1325,12 @@ grabkeys(void)
 				if (keychords[i]->keys[currentkey].keysym == syms[(k - start) * skip])
 					for (c = 0; c < LENGTH(modifiers); c++)
 						XGrabKey(dpy, k,
-							 keychords[i]->keys[currentkey].mod | modifiers[c],
-							 root, True,
-							 GrabModeAsync, GrabModeAsync);
+							     keychords[i]->keys[currentkey].mod | modifiers[c],
+							     root, True,
+							     GrabModeAsync, GrabModeAsync);
                 if (currentkey > 0)
                     XGrabKey(dpy, XKeysymToKeycode(dpy, XK_Escape), 
-                            AnyModifier, root, True, GrabModeAsync, GrabModeAsync);
+                             AnyModifier, root, True, GrabModeAsync, GrabModeAsync);
 		XFree(syms);
 	}
 }
