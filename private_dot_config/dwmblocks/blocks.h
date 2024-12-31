@@ -19,7 +19,7 @@ static const Block extra_blocks[] = {
     {"",        "block_bright",     1,                  0},
     {"",        "block_vol",        1,                  0},
     // {"",        "block_updates",    60,                 0},
-    {"",        "block_kernel",     360,                0},
+    // {"",        "block_kernel",     360,                0},
 };
 
 static char statussep[] = ";";
