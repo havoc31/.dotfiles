@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.09 for x on Sun Dec 29 20:56:58 2024.
+# Written by xscreensaver-settings 6.09 for x on Tue Dec 31 11:16:40 2024.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:05:00
@@ -29,7 +29,7 @@ chooseRandomImages: False
 imageDirectory:	
 
 mode:		one
-selected:	116
+selected:	49
 
 textMode:	date
 textLiteral:	XScreenSaver
@@ -37,7 +37,7 @@ textFile:
 textProgram:	fortune
 textURL:	https://en.wikipedia.org/w/index.php?title=Special:NewPages&feed=rss
 dialogTheme:	borderlessblack
-settingsGeom:	2,22 1258,26
+settingsGeom:	0,20 1260,28
 
 programs:								      \
 				maze --root				    \n\
@@ -63,7 +63,8 @@ programs:								      \
 				coral --root				    \n\
 				deco --root				    \n\
 				drift --root				    \n\
--				fadeplot --root				    \n\
+-				fadeplot --root --count 26 --cycles 3279      \
+				  --ncolors 255				    \n\
 				galaxy --root				    \n\
 				goop --root				    \n\
 				grav --root				    \n\

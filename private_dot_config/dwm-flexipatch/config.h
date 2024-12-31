@@ -910,15 +910,17 @@ static const Key on_empty_keys[] = {
 #define DWM_SCRIPTS_PATH "$HOME/.config/dwm-flexipatch/scripts"
 #define SCRIPTS_PATH "PATH=\"$PATH:" DWM_SCRIPTS_PATH "\" "
 
-static const char brightupcmd[] = SCRIPTS_PATH "bright_up"; 
-static const char brightdowncmd[] = SCRIPTS_PATH "bright_down"; 
+#define brightupcmd SCRIPTS_PATH "bright_up"
+#define brightdowncmd SCRIPTS_PATH "bright_down" 
 
-static const char volupcmd[] = SCRIPTS_PATH "vol_up"; 
-static const char voldowncmd[] = SCRIPTS_PATH "vol_down"; 
-static const char volmutecmd[] = SCRIPTS_PATH "vol_mute";
+#define volupcmd SCRIPTS_PATH "vol_up"
+#define voldowncmd  SCRIPTS_PATH "vol_down" 
+#define volmutecmd SCRIPTS_PATH "vol_mute"
 
-static const char screenareacmd[] = "flameshot gui";
-static const char screenfullcmd[] = "flameshot full";
+#define screenareacmd "flameshot gui"
+#define screenfullcmd "flameshot full"
+
+#define xscreensaverlock "xscreensaver-command -lock" 
 
 static const Key keys[] = {
 	/* modifier                     key            function                argument */
@@ -1337,6 +1339,8 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_Print, spawn, SHCMD(screenareacmd)}, 
     {MODKEY, XK_Print, spawn, SHCMD(screenfullcmd)}, 
 
+    // Xscreensaver
+    {MODKEY | ShiftMask, XK_l, spawn, SHCMD(xscreensaverlock)}, 
     
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
