@@ -229,6 +229,7 @@ zoomabs(const Arg *arg)
 
 	xunloadfonts();
 	xloadfonts(usedfont, arg->f);
+	xloadsparefonts();
 
 	cresize(0, 0);
 	redraw();
@@ -422,6 +423,8 @@ bpress(XEvent *e)
 
 		selstart(evcol(e), evrow(e), snap);
 
+		clearurl();
+		url_click = 1;
 	}
 }
 
@@ -644,6 +647,8 @@ brelease(XEvent *e)
 
 	if (btn == Button1) {
 		mousesel(e, 1);
+		if (url_click && e->xkey.state & url_opener_modkey)
+			openUrlOnClick(evcol(e), evrow(e), url_opener);
 	}
 
 }
@@ -651,6 +656,13 @@ brelease(XEvent *e)
 void
 bmotion(XEvent *e)
 {
+	if (!IS_SET(MODE_MOUSE)) {
+		if (!(e->xbutton.state & Button1Mask) && detecturl(evcol(e), evrow(e), 1))
+			XDefineCursor(xw.dpy, xw.win, xw.upointer);
+		else
+			XDefineCursor(xw.dpy, xw.win, xw.vpointer);
+	}
+	url_click = 0;
 
 	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forcemousemod)) {
 		mousereport(e);
@@ -1090,6 +1102,9 @@ xinit(int cols, int rows)
 	usedfont = (opt_font == NULL)? font : opt_font;
 	xloadfonts(usedfont, 0);
 
+	/* spare fonts */
+	xloadsparefonts();
+
 	/* colors */
 	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
 	xloadcols();
@@ -1111,6 +1126,7 @@ xinit(int cols, int rows)
 		| ButtonMotionMask | ButtonPressMask | ButtonReleaseMask
 		;
 	xw.attrs.colormap = xw.cmap;
+	xw.attrs.event_mask |= PointerMotionMask;
 
 	root = XRootWindow(xw.dpy, xw.scr);
 	if (!(opt_embed && (parent = strtol(opt_embed, NULL, 0))))
@@ -1161,6 +1177,10 @@ xinit(int cols, int rows)
 	}
 
 	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
+
+	xw.upointer = XCreateFontCursor(xw.dpy, XC_hand2);
+	xw.vpointer = cursor;
+	xw.pointerisvisible = 1;
 
 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
 	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
@@ -1357,10 +1377,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		bg = &dc.col[base.bg];
 	}
 
-	/* Change basic system colors [0-7] to bright system colors [8-15] */
-	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
-		fg = &dc.col[base.fg + 8];
-
 	if (IS_SET(MODE_REVERSE)) {
 		if (fg == &dc.col[defaultfg]) {
 			fg = &dc.col[defaultbg];
@@ -1446,6 +1462,19 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 	if (base.mode & ATTR_STRUCK) {
 		XftDrawRect(xw.draw, fg, winx, winy + 2 * dc.font.ascent * chscale / 3,
 				width, 1);
+	}
+
+	/* underline url (openurlonclick patch) */
+	if (url_draw && y >= url_y1 && y <= url_y2) {
+		int x1 = (y == url_y1) ? url_x1 : 0;
+		int x2 = (y == url_y2) ? MIN(url_x2, term.col-1) : url_maxcol;
+		if (x + charlen > x1 && x <= x2) {
+			int xu = MAX(x, x1);
+			int wu = (x2 - xu + 1) * win.cw;
+			xu = borderpx + xu * win.cw;
+			XftDrawRect(xw.draw, fg, xu, winy + dc.font.ascent * chscale + 2, wu, 1);
+			url_draw = (y != url_y2 || x + charlen <= x2);
+		}
 	}
 
 	/* Reset clip to none. */
@@ -1677,6 +1706,7 @@ unmap(XEvent *ev)
 void
 xsetpointermotion(int set)
 {
+	set = 1; /* keep MotionNotify event enabled */
 	MODBIT(xw.attrs.event_mask, set, PointerMotionMask);
 	XChangeWindowAttributes(xw.dpy, xw.win, CWEventMask, &xw.attrs);
 }
@@ -1686,6 +1716,8 @@ xsetmode(int set, unsigned int flags)
 {
 	int mode = win.mode;
 	MODBIT(win.mode, set, flags);
+	if (win.mode & MODE_MOUSE && xw.pointerisvisible)
+		XDefineCursor(xw.dpy, xw.win, xw.vpointer);
 	if ((win.mode & MODE_REVERSE) != (mode & MODE_REVERSE))
 		redraw();
 }

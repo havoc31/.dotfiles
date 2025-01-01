@@ -1,3 +1,4 @@
 /* Patches */
 #include "copyurl.h"
-#include "scrollback.h"
+#include "openurlonclick.h"
+#include "reflow.h"
