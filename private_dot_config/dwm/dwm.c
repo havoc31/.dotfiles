@@ -1458,9 +1458,13 @@ manage(Window w, XWindowAttributes *wa)
         c->y = c->mon->wy + c->mon->wh - HEIGHT(c);
     c->x = MAX(c->x, c->mon->wx);
     c->y = MAX(c->y, c->mon->wy);
-
+    
     wc.border_width = c->bw;
     XConfigureWindow(dpy, w, CWBorderWidth, &wc);
+
+    c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+
     if (c->isfloating)
         XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColFloat].pixel);
     else

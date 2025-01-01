@@ -144,8 +144,8 @@ static const Rule rules[] = {
     RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
     RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
     RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-    RULE(.class = "Gimp", .tags = 1 << 4)
-    RULE(.class = "Firefox", .tags = 1 << 7)
+    RULE(.class = "Nsxiv", .instance = "nsxiv", .isfloating = 1)
+    RULE(.class = "Zathura", .instance = "org.pwmt.zathura", .isfloating = 1)
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as
