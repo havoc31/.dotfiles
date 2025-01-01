@@ -13,10 +13,10 @@ else
   bat_status="+"
 fi 
 
-if [[ $bat_perc -gt 50 ]]; then
+if [[ $bat_perc -gt 25 ]]; then
     status_color="^C2^"
     urgency="normal"
-elif [[ $bat_perc -gt 25 ]]; then
+elif [[ $bat_perc -gt 10 ]]; then
     status_color="^C3^"
     urgency="low"
 else
