@@ -2,29 +2,29 @@
 
 ! 8 normal colors
 *.color0: #000000 
-*.color1: #fe0100
-*.color2: #33ff00
-*.color3: #feff00 
-*.color4: #0066ff
-*.color5: #cc00ff
-*.color6: #00ffff
-*.color7: #d0d0d0
+*.color1: #ff5f5f
+*.color2: #44df44
+*.color3: #efef00
+*.color4: #338fff
+*.color5: #ff66ff
+*.color6: #00eff0
+*.color7: #ffffff
 
 ! 8 bright colors 
-*.color8: #808080
-*.color9: #fe0100
-*.color10: #33ff00
-*.color11: #feff00
-*.color12: #0066ff
-*.color13: #cc00ff
-*.color14: #00ffff
-*.color15: #ffffff
+*.color8: #bbbbbb
+*.color9: #ff5f59
+*.color10: #44bc44
+*.color11: #d0bc00
+*.color12: #2fafff
+*.color13: #feacd0
+*.color14: #00d3d0
+*.color15: #eeeeee
 
 ! DWM COLORS 
 dwm.normfgcolor: #ffffff
 dwm.normbgcolor: #000000
 dwm.normbordercolor: #444444
-dwm.normfloatcolor: #f05ff8
+dwm.normfloatcolor: #ff66ff
 
 dwm.selfgcolor: #eeeeee
 dwm.selbgcolor: #005577
@@ -34,7 +34,7 @@ dwm.selfloatcolor: #005577
 dwm.titlenormfgcolor: #bbbbbb
 dwm.titlenormbgcolor: #222222
 dwm.titlenormbordercolor: #444444
-dwm.titlenormfloatcolor: #f05ff8
+dwm.titlenormfloatcolor: #ff66ff
 
 dwm.titleselfgcolor: #eeeeee
 dwm.titleselbgcolor: #005577
@@ -44,7 +44,7 @@ dwm.titleselfloatcolor: #005577
 dwm.tagsnormfgcolor: #ffffff
 dwm.tagsnormbgcolor: #000000
 dwm.tagsnormbordercolor: #444444
-dwm.tagsnormfloatcolor: #f05ff8
+dwm.tagsnormfloatcolor: #ff66ff
 
 dwm.tagsselfgcolor: #eeeeee
 dwm.tagsselbgcolor: #005577
@@ -58,8 +58,8 @@ dwm.hidselbgcolor: #222222
 
 dwm.urgfgcolor: #bbbbbb
 dwm.urgbgcolor: #222222
-dwm.urgbordercolor: #fe0100
-dwm.urgfloatcolor: #f05ff8
+dwm.urgbordercolor: #ff5f5f
+dwm.urgfloatcolor: #ff66ff
 
 ! DMENU COLORS
 dmenu.font: FiraCode:size=10:antialias=true
@@ -71,15 +71,15 @@ dmenu.selbackground: #005577
 dmenu.selforeground: #ffffff
 
 dmenu.outbackground: #000000
-dmenu.outforeground: #00ffff
+dmenu.outforeground: #00eff0
 
 dmenu.bordercolor: #005577
 
 dmenu.selhlbackground: #005577
-dmenu.selhlforeground: #f05ff8
+dmenu.selhlforeground: #ff66ff
 
 dmenu.hlbackground: #222222
-dmenu.hlforeground: #f05ff8
+dmenu.hlforeground: #ff66ff
 
 ! ST COLORS
 st.font: FiraCode:size=14:antialias=true:autohint=true
