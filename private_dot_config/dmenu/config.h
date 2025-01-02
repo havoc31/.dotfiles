@@ -8,7 +8,7 @@ static int min_width = 500;                 /* minimum width when centered */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static char *fonts[] =
 {
-	"FiraCode:size=12:antialias=true"
+	"FiraCode:size=10:antialias=true"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *symbol_1 = "<";
@@ -36,5 +36,5 @@ static unsigned int columns    = 4;
 static const char worddelimiters[] = " ";
 
 /* Size of the window border */
-static unsigned int border_width = 0;
+static unsigned int border_width = 2;
 

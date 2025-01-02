@@ -40,11 +40,11 @@ dwm.urgbordercolor: #fe0100
 dwm.urgfloatcolor: #f05ff8
 
 ! DMENU COLORS
-dmenu.background: #222222
-dmenu.foreground: #bbbbbb
+dmenu.background: #000000
+dmenu.foreground: #ffffff
 
-dmenu.selbackground: #eeeeee
-dmenu.selforeground: #005577
+dmenu.selbackground: #005577
+dmenu.selforeground: #ffffff
 
 dmenu.outbackground: #000000
 dmenu.outforeground: #00ffff

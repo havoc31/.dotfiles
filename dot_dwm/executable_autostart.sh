@@ -8,7 +8,7 @@ setxkbmap -option "ctrl:nocaps"
 xscreensaver --no-splash &
 
 # .Xresources
-xrdb $HOME/.Xresources
+xrdb -merge $HOME/.Xresources
 
 # dwmblocks
 xsetroot -name  " "
