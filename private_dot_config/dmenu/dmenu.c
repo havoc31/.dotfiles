@@ -232,12 +232,12 @@ drawmenu(void)
 			if (columns)
 				drawitem(
 					item,
-					x + ((i / lines) *  ((mw - x) / columns)),
+					0 + ((i / lines) *  (mw / columns)),
 					y + (((i % lines) + 1) * bh),
-					(mw - x) / columns
+					mw / columns
 				);
 			else
-				drawitem(item, x, y += bh, mw - x);
+				drawitem(item, 0, y += bh, mw);
 	} else if (matches) {
 		/* draw horizontal list */
 		x += inputw;
