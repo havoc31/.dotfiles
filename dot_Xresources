@@ -1,3 +1,25 @@
+! DEFAULTS
+
+! 8 normal colors
+*.color0: #000000 
+*.color1: #fe0100
+*.color2: #33ff00
+*.color3: #feff00 
+*.color4: #0066ff
+*.color5: #cc00ff
+*.color6: #00ffff
+*.color7: #d0d0d0
+
+! 8 bright colors 
+*.color8: #808080
+*.color9: #fe0100
+*.color10: #33ff00
+*.color11: #feff00
+*.color12: #0066ff
+*.color13: #cc00ff
+*.color14: #00ffff
+*.color15: #ffffff
+
 ! DWM COLORS 
 dwm.normfgcolor: #ffffff
 dwm.normbgcolor: #000000
@@ -40,6 +62,8 @@ dwm.urgbordercolor: #fe0100
 dwm.urgfloatcolor: #f05ff8
 
 ! DMENU COLORS
+dmenu.font: FiraCode:size=10:antialias=true
+
 dmenu.background: #000000
 dmenu.foreground: #ffffff
 
@@ -58,28 +82,9 @@ dmenu.hlbackground: #222222
 dmenu.hlforeground: #f05ff8
 
 ! ST COLORS
+st.font: FiraCode:size=14:antialias=true:autohint=true
 
 st.background: #000000
 st.foreground: #ffffff
-
-! 8 normal colors
-*.color0: #000000 
-*.color1: #fe0100
-*.color2: #33ff00
-*.color3: #feff00 
-*.color4: #0066ff
-*.color5: #cc00ff
-*.color6: #00ffff
-*.color7: #d0d0d0
-
-! 8 bright colors 
-*.color8: #808080
-*.color9: #fe0100
-*.color10: #33ff00
-*.color11: #feff00
-*.color12: #0066ff
-*.color13: #cc00ff
-*.color14: #00ffff
-*.color15: #ffffff
 
 
