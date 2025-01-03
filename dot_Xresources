@@ -87,4 +87,13 @@ st.font: FiraCode:size=14:antialias=true:autohint=true
 st.background: #000000
 st.foreground: #ffffff
 
+! NSXIV
+Nsxiv.window.background: #000000
+Nsxiv.window.foreground: #ffffff
+
+Nsxiv.bar.font: FiraCode:size=12:antialias=true
+Nsxiv.bar.background: #000000
+Nsxiv.bar.foreground: #ffffff
+Nsxiv.mark.foreground: #338fff
+
 
