@@ -271,7 +271,7 @@ static const Keychord *keychords[] = {
     &((Keychord){1, {{ MODKEY | ShiftMask, XK_l }},         spawn,                  SHCMD(xscreensaverlock)}), 
 
 
-    &((Keychord){2, {{ MODKEY, XK_e }, { 0, XK_e }},        spawn,                  SHCMD("emacs")}), 
+    &((Keychord){2, {{ MODKEY, XK_e }, { 0, XK_e }},        spawn,                  SHCMD("emacsclient -c -a 'emacs'")}), 
     
     TAGKEYS(XK_1, 0)
     TAGKEYS(XK_2, 1)

@@ -1,9 +1,25 @@
+" PLUGINS ---------------------------------------------------------------- {{{
+
+call plug#begin()
+
+Plug 'miikanissi/modus-themes.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'norcalli/nvim-colorizer.lua'
+
+call plug#end()
+
+" }}}
+
 " CONFIG ---------------------------------------------------------------- {{{
 
 set encoding=UTF-8
 
 " Change colorscheme
-colorscheme industry
+colorscheme modus_vivendi
+" set termguicolors
 
 " Turn syntax highlighting on.
 syntax on
@@ -53,39 +69,26 @@ set history=20
 
 " }}}
 
-" PLUGINS ---------------------------------------------------------------- {{{
-
-call plug#begin()
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'norcalli/nvim-colorizer.lua'
-
-call plug#end()
-
-" }}}
-
 " MAPPINGS --------------------------------------------------------------- {{{
 
 inoremap jj <esc>
 
 " You can split the window in Vim by typing :split or :vsplit.
-nnoremap <c-s> <c-w>s
-nnoremap <c-v> <c-w>v
+" nnoremap <c-s> <c-w>s
+" nnoremap <c-v> <c-w>v
 
 " Navigate the split view easier by pressing CTRL+j, CTRL+k, CTRL+h, or CTRL+l.
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-l> <c-w>l
 
 " Resize split windows using arrow keys by pressing:
 " CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
-noremap <c-up> <c-w>+
-noremap <c-down> <c-w>-
-noremap <c-left> <c-w>>
-noremap <c-right> <c-w><
+" noremap <c-up> <c-w>+
+" noremap <c-down> <c-w>-
+" noremap <c-left> <c-w>>
+" noremap <c-right> <c-w><
 
 " NERDTree specific mappings.
 " Map the F3 key to toggle NERDTree open and close.
