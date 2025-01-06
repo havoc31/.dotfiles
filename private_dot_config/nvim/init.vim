@@ -3,10 +3,10 @@
 call plug#begin()
 
 Plug 'miikanissi/modus-themes.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'scrooloose/nerdtree'
+" Plug 'vim-airline/vim-airline'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
@@ -19,7 +19,9 @@ set encoding=UTF-8
 
 " Change colorscheme
 colorscheme modus_vivendi
-" set termguicolors
+
+" Color coluemn
+set colorcolumn=80
 
 " Turn syntax highlighting on.
 syntax on
@@ -113,13 +115,4 @@ autocmd BufReadPost *
 
 " }}}
 
-" STATUS LINE ------------------------------------------------------------ {{{
 
-" Automatically displays all buffers when there's only one tab open.
-let g:airline#extensions#tabline#enabled = 1
-
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-
-" }}}
