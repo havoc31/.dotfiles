@@ -5,7 +5,7 @@ return {
         local config = require("lualine")
 
         local themes_path = vim.fn.stdpath("config")
-        local custom_modus_vivendi = require("colors.modus-lualine")
+        local custom_modus_vivendi = require("lualine.themes.modus")
         config.setup({
             options = {
                 theme = custom_modus_vivendi,
