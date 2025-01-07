@@ -3,8 +3,6 @@ return {
     event = "InsertEnter",
     config = function()
         local config = require("nvim-autopairs")
-        config.setup({
-            map_cr = true
-        })
+        config.setup({ map_cr = true })
     end
 }
