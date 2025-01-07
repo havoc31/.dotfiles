@@ -4,6 +4,8 @@ local opt = vim.opt
 
 o.termguicolors = true
 
+o.colorcolumn = "80"
+
 o.number = true
 o.relativenumber = true
 o.cursorline = true
