@@ -1,5 +1,6 @@
+vim.keymap.set("n", "<F3>", ":NvimTreeToggle<CR>")
+
 return {
-    vim.keymap.set("n", "<F3>", ":NvimTreeToggle<CR>"),
     view = { side = "left", width = 40 },
     update_focused_file = { enable = true, update_cwd = false },
     renderer = {
@@ -8,7 +9,11 @@ return {
 
         root_folder_label = false,
 
-        icons = { webdev_colors = false, show = { folder_arrow = false } },
+        icons = { 
+            webdev_colors = true, 
+            show = { folder_arrow = true }
+        },
+
         indent_markers = { enable = true },
     }
 }
