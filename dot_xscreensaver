@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-settings 6.09 for x on Mon Jan  6 23:06:00 2025.
+# Written by xscreensaver-settings 6.09 for x on Wed Jan  8 19:29:21 2025.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	0:05:00
@@ -85,7 +85,9 @@ programs:								      \
 				slip --root				    \n\
   GL: 				sproingies --root			    \n\
 				starfish --root				    \n\
-				strange --root				    \n\
+				strange --root --curve 38 --points 123705     \
+				  --zoom 1.347 --brightness 0.292	      \
+				  --motion-blur 3.73 --ncolors 99	    \n\
 				swirl --root				    \n\
 				triangle --root				    \n\
 				xjack --root				    \n\
