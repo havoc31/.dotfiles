@@ -11,7 +11,7 @@ xscreensaver --no-splash &
 xrdb -merge $HOME/.Xresources
 
 # dwmblocks
-xsetroot -name  " "
+# xsetroot -name  " "
 DWMBLOCKS_PATH="$HOME/.config/dwmblocks/scripts"
 PATH="$PATH:$DWMBLOCKS_PATH" dwmblocks &
 

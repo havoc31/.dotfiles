@@ -12,4 +12,4 @@ fi
 
 info="$mutted $vol%"
 icon="VOL:"
-printf "^C4^%s %s^d^" "$icon" "$info"
+printf "^C12^%s %s^d^" "$icon" "$info"

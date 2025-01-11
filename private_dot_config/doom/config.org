@@ -5,7 +5,7 @@ Visual setting of Doom Emacs
 
 #+begin_src emacs-lisp
 (setq doom-theme 'modus-vivendi)
-(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'medium))
+(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'normal))
 #+end_src
 
 
@@ -282,3 +282,22 @@ An RSS newsfeed reader for Emacs.
 | https://www.techrepublic.com/rssfeeds/topic/open-source/ | techrepublic  | linux       |
 | https://betanews.com/feed                                | betanews      | linux       |
 | http://lxer.com/module/newswire/headlines.rss            | lxer          | linux       |
+
+* NEOTREE
+Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  Doom Emacs had no keybindings set for neotree.  Since Doom Emacs uses 'SPC t' for 'toggle' keybindings, I used 'SPC t n' for toggle-neotree.
+
+| COMMAND        | DESCRIPTION               | KEYBINDING |
+|----------------+---------------------------+------------|
+| neotree-toggle | /Toggle neotree/            | SPC t n    |
+| neotree- dir   | /Open directory in neotree/ | SPC d n    |
+
+#+BEGIN_SRC emacs-lisp
+(after! neotree
+  (setq neo-smart-open t
+        neo-window-fixed-size nil))
+(after! doom-themes
+  (setq doom-neotree-enable-variable-pitch t))
+(map! :leader
+      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
+      :desc "Open directory in neotree"  "d n" #'neotree-dir)
+#+END_SRC

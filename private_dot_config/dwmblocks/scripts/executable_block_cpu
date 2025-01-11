@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cpu="$(top -b -n 1 | grep "%Cpu(s)" | awk '{print $2}')%"
+cpu="$(top -b -n 1 | grep "%Cpu(s)" | awk '{print $2}')"
 icon="CPU:"
-printf "^C5^%s %5s^d^" "$icon" "$cpu"
+printf "^C5^%s %5s%%^d^" "$icon" "$cpu"
