@@ -153,7 +153,8 @@ static const Rule rules[] = {
     RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
     RULE(.class = "Nsxiv", .instance = "nsxiv", .isfloating = 1)
     RULE(.class = "Zathura", .instance = "org.pwmt.zathura", .isfloating = 1)
-
+    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
+    RULE(.class = "pavucontrol", .instance = "pavucontrol", .isfloating = 1)
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as

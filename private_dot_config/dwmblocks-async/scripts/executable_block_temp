@@ -1,0 +1,5 @@
+#!/bin/sh
+
+temp=$(sensors | grep Package | awk '{print $4}')
+icon="TEMP"
+printf "^C13^%s %s^d^" "$icon" "$temp"
