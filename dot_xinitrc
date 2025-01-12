@@ -1,1 +1,3 @@
-exec dwm > /tmp/dwm-logs
+dwmblocks &
+exec dwm 2> /tmp/dwm-logs
+
