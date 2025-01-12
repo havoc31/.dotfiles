@@ -146,6 +146,7 @@ static const Rule rules[] = {
     RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
     RULE(.class = "Nsxiv", .instance = "nsxiv", .isfloating = 1)
     RULE(.class = "Zathura", .instance = "org.pwmt.zathura", .isfloating = 1)
+
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as
@@ -163,7 +164,7 @@ static const Rule rules[] = {
 static const BarRule barrules[] = {
     /* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
     { -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
-    {  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
+    { -1,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
     { -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
     { statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
     { -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
@@ -185,12 +186,12 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define KEYCHORD(...) &((Keychord){__VA_ARGS__}),
+#define KEYCHORD(...) &((Keychord){ __VA_ARGS__ }),
 #define TAGKEYS(KEY,TAG) \
-       KEYCHORD(1, {{MODKEY, KEY}},                                        view,           {.ui = 1 << TAG} ) \
-       KEYCHORD(1, {{MODKEY|ControlMask, KEY}},                            toggleview,     {.ui = 1 << TAG} ) \
-       KEYCHORD(1, {{MODKEY|ShiftMask, KEY}},                              tag,            {.ui = 1 << TAG} ) \
-       KEYCHORD(1, {{MODKEY|ControlMask|ShiftMask, KEY}},                  toggletag,      {.ui = 1 << TAG} )
+       KEYCHORD(1, {{MODKEY, KEY}},                                        view,           {.ui = 1 << TAG}) \
+       KEYCHORD(1, {{MODKEY|ControlMask, KEY}},                            toggleview,     {.ui = 1 << TAG}) \
+       KEYCHORD(1, {{MODKEY|ShiftMask, KEY}},                              tag,            {.ui = 1 << TAG}) \
+       KEYCHORD(1, {{MODKEY|ControlMask|ShiftMask, KEY}},                  toggletag,      {.ui = 1 << TAG})
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -222,56 +223,68 @@ static const char *termcmd[]  = { "st", NULL };
 
 #define xscreensaverlock "xscreensaver-command -lock" 
 
+#define KILL_DWM SHCMD("pkill dwm")
+
+#define XPROP_RULE "xprop | awk '/^WM_CLASS/{sub(/.* =/, \"\"); sub(/,/, \"\"); printf(\"RULE(.class = %s, .instance = %s)\", $2, $1) }' | xclip -selection clipboard"
+
 static const Keychord *keychords[] = {
     /* keys                                                 function                argument */
-    KEYCHORD(1, {{ MODKEY, XK_p }},                     spawn,                  {.v = dmenucmd } )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_Return }},      spawn,                  {.v = termcmd } )
-    KEYCHORD(1, {{ MODKEY, XK_b }},                     togglebar,              {0} )
-    KEYCHORD(1, {{ MODKEY, XK_j }},                     focusstack,             {.i = +1 } )
-    KEYCHORD(1, {{ MODKEY, XK_k }},                     focusstack,             {.i = -1 } )
-    KEYCHORD(1, {{ MODKEY, XK_i }},                     incnmaster,             {.i = +1 } )
-    KEYCHORD(1, {{ MODKEY, XK_d }},                     incnmaster,             {.i = -1 } )
-    KEYCHORD(1, {{ MODKEY, XK_h }},                     setmfact,               {.f = -0.05} )
-    KEYCHORD(1, {{ MODKEY, XK_l }},                     setmfact,               {.f = +0.05} )
-    KEYCHORD(1, {{ MODKEY, XK_Return }},                zoom,                   {0} )
-    KEYCHORD(1, {{ MODKEY, XK_Tab }},                   view,                   {0} )
-    KEYCHORD(1, {{ MODKEY|ControlMask, XK_z }},         showhideclient,         {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_c }},           killclient,             {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_q }},           quit,                   {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_F5 }},          xrdb,                   {.v = NULL } )
-    KEYCHORD(1, {{ MODKEY, XK_t }},                     setlayout,              {.v = &layouts[0]} )
-    KEYCHORD(1, {{ MODKEY, XK_f }},                     setlayout,              {.v = &layouts[1]} )
-    KEYCHORD(1, {{ MODKEY, XK_m }},                     setlayout,              {.v = &layouts[2]} )
-    KEYCHORD(1, {{ MODKEY, XK_space }},                 setlayout,              {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_space }},       togglefloating,         {0} )
-    KEYCHORD(1, {{ MODKEY, XK_0 }},                     view,                   {.ui = ~0 } )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_0 }},           tag,                    {.ui = ~0 } )
-    KEYCHORD(1, {{ MODKEY, XK_comma }},                 focusmon,               {.i = -1 } )
-    KEYCHORD(1, {{ MODKEY, XK_period }},                focusmon,               {.i = +1 } )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_comma }},       tagmon,                 {.i = -1 } )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_period }},      tagmon,                 {.i = +1 } )
-    KEYCHORD(1, {{ MODKEY, XK_o }},                     hidewin,                 {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_o }},           restorewin,             {0} )
-    KEYCHORD(1, {{ MODKEY, XK_w }},                     hideotherwins,          {0} )
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_w }},           restoreotherwins,       {0} )
+    KEYCHORD(1, {{ MODKEY, XK_p }},                     spawn,                  {.v = dmenucmd })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_Return }},      spawn,                  {.v = termcmd })
+    KEYCHORD(1, {{ MODKEY, XK_b }},                     togglebar,              {0})
+    KEYCHORD(1, {{ MODKEY, XK_j }},                     focusstack,             {.i = +1 })
+    KEYCHORD(1, {{ MODKEY, XK_k }},                     focusstack,             {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_i }},                     incnmaster,             {.i = +1 })
+    KEYCHORD(1, {{ MODKEY, XK_d }},                     incnmaster,             {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_h }},                     setmfact,               {.f = -0.05})
+    KEYCHORD(1, {{ MODKEY, XK_l }},                     setmfact,               {.f = +0.05})
+    KEYCHORD(1, {{ MODKEY, XK_Return }},                zoom,                   {0})
+    KEYCHORD(1, {{ MODKEY, XK_Tab }},                   view,                   {0})
+    KEYCHORD(1, {{ MODKEY|ControlMask, XK_z }},         showhideclient,         {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_c }},           killclient,             {0})
 
-    // Volume
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_q}},           spawn,       KILL_DWM)
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_r}},           quit,        {0})
+
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_F5 }},          xrdb,                   {.v = NULL })
+
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_i }},           spawn,                  SHCMD(XPROP_RULE))
+
+    KEYCHORD(1, {{ MODKEY, XK_t }},                     setlayout,              {.v = &layouts[0]})
+    KEYCHORD(1, {{ MODKEY, XK_f }},                     setlayout,              {.v = &layouts[1]})
+    KEYCHORD(1, {{ MODKEY, XK_m }},                     setlayout,              {.v = &layouts[2]})
+    KEYCHORD(1, {{ MODKEY, XK_space }},                 setlayout,              {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_space }},       togglefloating,         {0})
+    KEYCHORD(1, {{ MODKEY, XK_0 }},                     view,                   {.ui = ~0 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_0 }},           tag,                    {.ui = ~0 })
+    KEYCHORD(1, {{ MODKEY, XK_comma }},                 focusmon,               {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_period }},                focusmon,               {.i = +1 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_comma }},       tagmon,                 {.i = -1 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_period }},      tagmon,                 {.i = +1 })
+    
+    /*Hide win patch*/
+    KEYCHORD(1, {{ MODKEY, XK_o }},                     hidewin,                {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_o }},           restorewin,             {0})
+    KEYCHORD(1, {{ MODKEY, XK_w }},                     hideotherwins,          {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_w }},           restoreotherwins,       {0})
+
+    /*Volume*/
     KEYCHORD(1, {{ MODKEY, XK_F1 }},                    spawn,                  SHCMD(volmutecmd))
     KEYCHORD(1, {{ MODKEY, XK_F2 }},                    spawn,                  SHCMD(voldowncmd))
     KEYCHORD(1, {{ MODKEY, XK_F3 }},                    spawn,                  SHCMD(volupcmd))
 
-    // Brightness
+    /*Brightness*/
     KEYCHORD(1, {{ MODKEY, XK_F4 }},                    spawn,                  SHCMD(brightdowncmd))
     KEYCHORD(1, {{ MODKEY, XK_F5 }},                    spawn,                  SHCMD(brightupcmd))
 
-    // Screenshot
+    /*Screenshot*/
     KEYCHORD(1, {{ MODKEY | ShiftMask, XK_Print }},     spawn,                  SHCMD(screenareacmd)) 
     KEYCHORD(1, {{ MODKEY, XK_Print }},                 spawn,                  SHCMD(screenfullcmd)) 
 
-    // Xscreensaver
+     /*Xscreensaver*/
     KEYCHORD(1, {{ MODKEY | ShiftMask, XK_l }},         spawn,                  SHCMD(xscreensaverlock)) 
 
-
+    /*Doom Emacs*/
     KEYCHORD(2, {{ MODKEY, XK_e }, { 0, XK_e }},        spawn,                  SHCMD("emacsclient -c -a 'emacs'")) 
     
     TAGKEYS(XK_1, 0)
