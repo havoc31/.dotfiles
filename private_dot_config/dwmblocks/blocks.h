@@ -16,7 +16,7 @@ static const Block extra_blocks[] = {
     /*Icon*/	/*Command*/		/*Update Interval*/	/*Update Signal*/
     {"",        "block_cpu",        1,                  0},
     {"",        "block_temp",       2,                  0},
-    {"",        "block_disk",       5,                  0},
+    {"",        "block_disk",       1,                  0},
     {"",        "block_mem",        1,                  0},
     {"",        "block_bright",     1,                  0},
     {"",        "block_vol",        1,                  0},
