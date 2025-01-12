@@ -1,8 +1,12 @@
 /* See LICENSE file for copyright and license details. */
 
 /* Helper macros for spawning commands */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(CMD) { .v = (const char*[]){ "/bin/sh", "-c", CMD, NULL } }
 #define CMD(...)   { .v = (const char*[]){ __VA_ARGS__, NULL } }
+
+/* Helper macros for spawning custom scripts for dwm */
+#define DWM_SCRIPTS_PATH "$HOME/.config/dwm/scripts"
+#define DWM_SCRIPT(SCRIPT) SHCMD("PATH=\"$PATH:" DWM_SCRIPTS_PATH "\" " SCRIPT) 
 
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
@@ -208,24 +212,30 @@ static const char *dmenucmd[] = {
 };
 static const char *termcmd[]  = { "st", NULL };
 
-#define DWM_SCRIPTS_PATH "$HOME/.config/dwm/scripts"
-#define SCRIPTS_PATH "PATH=\"$PATH:" DWM_SCRIPTS_PATH "\" "
 
-#define brightupcmd SCRIPTS_PATH "bright_up"
-#define brightdowncmd SCRIPTS_PATH "bright_down" 
+/* Custom dwm scripts */
+#define brightupcmd     DWM_SCRIPT("bright_up")
+#define brightdowncmd   DWM_SCRIPT("bright_down") 
 
-#define volupcmd SCRIPTS_PATH "vol_up"
-#define voldowncmd  SCRIPTS_PATH "vol_down" 
-#define volmutecmd SCRIPTS_PATH "vol_mute"
+#define volupcmd    DWM_SCRIPT("vol_up")
+#define voldowncmd  DWM_SCRIPT("vol_down") 
+#define volmutecmd  DWM_SCRIPT("vol_mute")
+/* Custom dwm scripts */
+
+/* Usefult scripts and commands */
+#define KILL_DWM SHCMD("pkill dwm")
 
 #define screenareacmd "flameshot gui"
 #define screenfullcmd "flameshot full"
 
 #define xscreensaverlock "xscreensaver-command -lock" 
 
-#define KILL_DWM SHCMD("pkill dwm")
 
-#define XPROP_RULE "xprop | awk '/^WM_CLASS/{sub(/.* =/, \"\"); sub(/,/, \"\"); printf(\"RULE(.class = %s, .instance = %s)\", $2, $1) }' | xclip -selection clipboard"
+/* Script to generate RULE(...) macro for window, copy to clipboard */
+#define XPROP_RULE "xprop | awk '/^WM_CLASS/{sub(/.* =/, \"\"); sub(/,/, \"\");" \
+                   "printf(\"RULE(.class = %s, .instance = %s)\", $2, $1) }'" \
+                   "| xclip -selection clipboard"
+/* Usefult scripts and commands */
 
 static const Keychord *keychords[] = {
     /* keys                                                 function                argument */
@@ -269,13 +279,13 @@ static const Keychord *keychords[] = {
     KEYCHORD(1, {{ MODKEY|ShiftMask, XK_w }},           restoreotherwins,       {0})
 
     /*Volume*/
-    KEYCHORD(1, {{ MODKEY, XK_F1 }},                    spawn,                  SHCMD(volmutecmd))
-    KEYCHORD(1, {{ MODKEY, XK_F2 }},                    spawn,                  SHCMD(voldowncmd))
-    KEYCHORD(1, {{ MODKEY, XK_F3 }},                    spawn,                  SHCMD(volupcmd))
+    KEYCHORD(1, {{ MODKEY, XK_F1 }},                    spawn,                  volmutecmd)
+    KEYCHORD(1, {{ MODKEY, XK_F2 }},                    spawn,                  voldowncmd)
+    KEYCHORD(1, {{ MODKEY, XK_F3 }},                    spawn,                  volupcmd)
 
     /*Brightness*/
-    KEYCHORD(1, {{ MODKEY, XK_F4 }},                    spawn,                  SHCMD(brightdowncmd))
-    KEYCHORD(1, {{ MODKEY, XK_F5 }},                    spawn,                  SHCMD(brightupcmd))
+    KEYCHORD(1, {{ MODKEY, XK_F4 }},                    spawn,                  brightdowncmd)
+    KEYCHORD(1, {{ MODKEY, XK_F5 }},                    spawn,                  brightupcmd)
 
     /*Screenshot*/
     KEYCHORD(1, {{ MODKEY | ShiftMask, XK_Print }},     spawn,                  SHCMD(screenareacmd)) 
