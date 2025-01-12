@@ -7,16 +7,19 @@ setxkbmap -option "ctrl:nocaps"
 # Screen saver
 xscreensaver --no-splash &
 
-# .Xresources
-xrdb -merge $HOME/.Xresources
-
 # dwmblocks
 # xsetroot -name  " "
 DWMBLOCKS_PATH="$HOME/.config/dwmblocks/scripts"
 PATH="$PATH:$DWMBLOCKS_PATH" dwmblocks &
+# dwmblocks &
+
+# .Xresources
+xrdb -merge $HOME/.Xresources
 
 # Reload .Xresources
 xdotool key Super+shift+F5
 
 # Notifications
 dunst & 
+
+

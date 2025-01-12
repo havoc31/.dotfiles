@@ -1,5 +1,5 @@
 #!/bin/sh
 
-temp=$(sensors | grep Package | awk '{print $4}')
+temp=$(sed 's/000$/°C/' /sys/class/thermal/thermal_zone0/temp)
 icon="TEMP"
 printf "^C13^%s %s^d^" "$icon" "$temp"
