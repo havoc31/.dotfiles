@@ -1,4 +1,4 @@
 #!/bin/sh
 
-date=$(date +"%a, %B %d %l:%M%p"| sed 's/  / /g')
+date=$(date +"%a, %B %d %l:%M:%S%p"| sed 's/  / /g')
 printf "%s" "$date"

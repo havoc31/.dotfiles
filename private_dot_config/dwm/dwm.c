@@ -1691,11 +1691,9 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
-    restart = arg->i;
-    running = 0;
-
-    if (restart)
+    if ((restart = arg->i))
 	    saveSession();
+    running = 0;
 }
 
 Monitor *
