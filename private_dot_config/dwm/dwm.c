@@ -44,6 +44,8 @@
 #include "drw.h"
 #include "util.h"
 
+#include <poll.h>
+
 /* macros */
 #define Button6                 6
 #define Button7                 7
@@ -387,7 +389,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 };
 static Atom wmatom[WMLast], netatom[NetLast];
 static Atom xatom[XLast];
-static int running = 1;
+static volatile sig_atomic_t running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme;
 static Display *dpy;
@@ -1689,7 +1691,11 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
+    restart = arg->i;
     running = 0;
+
+    if (restart)
+	    saveSession();
 }
 
 Monitor *
@@ -1826,14 +1832,25 @@ restack(Monitor *m)
 void
 run(void)
 {
-    XEvent ev;
-    /* main event loop */
-    XSync(dpy, False);
-    while (running && !XNextEvent(dpy, &ev)) {
+	XEvent ev;
+	XSync(dpy, False);
+	/* main event loop */
+	while (running) {
+		struct pollfd pfd = {
+			.fd = ConnectionNumber(dpy),
+			.events = POLLIN,
+		};
+		int pending = XPending(dpy) > 0 || poll(&pfd, 1, -1) > 0;
 
-        if (handler[ev.type])
-            handler[ev.type](&ev); /* call handler */
-    }
+		if (!running)
+			break;
+		if (!pending)
+			continue;
+
+		XNextEvent(dpy, &ev);
+		if (handler[ev.type])
+			handler[ev.type](&ev); /* call handler */
+	}
 }
 
 void
@@ -2010,6 +2027,9 @@ setup(void)
 
     /* clean up any zombies (inherited from .xinitrc etc) immediately */
     while (waitpid(-1, NULL, WNOHANG) > 0);
+
+    signal(SIGHUP, sighup);
+	signal(SIGTERM, sigterm);
 
     /* the one line of bloat that would have saved a lot of time for a lot of people */
     putenv("_JAVA_AWT_WM_NONREPARENTING=1");
@@ -2687,9 +2707,12 @@ main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
     scan();
     runautostart();
+    restoreSession();
     run();
     cleanup();
     XCloseDisplay(dpy);
+    if (restart)
+		execvp(argv[0], argv);
     return EXIT_SUCCESS;
 }
 

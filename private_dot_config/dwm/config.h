@@ -8,6 +8,9 @@
 #define DWM_SCRIPTS_PATH "$HOME/.config/dwm/scripts"
 #define DWM_SCRIPT(SCRIPT) SHCMD("PATH=\"$PATH:" DWM_SCRIPTS_PATH "\" " SCRIPT) 
 
+/* restart patch path to SESSION_FILE */
+#define SESSION_FILE "/tmp/dwm-session"
+
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
 static const unsigned int snap           = 5;  /* snap pixel */
@@ -223,8 +226,6 @@ static const char *termcmd[]  = { "st", NULL };
 /* Custom dwm scripts */
 
 /* Usefult scripts and commands */
-#define KILL_DWM SHCMD("pkill dwm")
-
 #define screenareacmd "flameshot gui"
 #define screenfullcmd "flameshot full"
 
@@ -253,8 +254,8 @@ static const Keychord *keychords[] = {
     KEYCHORD(1, {{ MODKEY|ControlMask, XK_z }},         showhideclient,         {0})
     KEYCHORD(1, {{ MODKEY|ShiftMask, XK_c }},           killclient,             {0})
 
-    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_q}},           spawn,       KILL_DWM)
-    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_r}},           quit,        {0})
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_q}},           quit,        {0})
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_r}},           quit,        {1})
 
     KEYCHORD(1, {{ MODKEY|ShiftMask, XK_F5 }},          xrdb,                   {.v = NULL })
 

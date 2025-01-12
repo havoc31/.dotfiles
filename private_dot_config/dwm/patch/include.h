@@ -16,6 +16,9 @@
 #include "autostart.h"
 #include "hidewin.h"
 #include "xrdb.h"
+/* Restarting patches */
+#include "restartsig.h"
+#include "restoresession.h"
 /* Layouts */
 #include "layout_monocle.h"
 #include "layout_tile.h"
