@@ -4,12 +4,14 @@ id=8
 bat_log_file=/tmp/bat-status
 bat_perc=$(cat /sys/class/power_supply/BAT0/capacity)
 bat_status=""
-bat_prev_status=$(tail -n 1 $bat_log_file)
 
 # Check battery status
 if [ ! -f $bat_log_file ]; then
     echo "" > $bat_log_file
 fi
+
+bat_prev_status=$(tail -n 1 $bat_log_file)
+
 
 # Check the battery status
 if [[ $(cat /sys/class/power_supply/BAT0/status) == "Discharging" ]]; then
@@ -36,7 +38,7 @@ if [[ "$bat_status" != "$bat_prev_status" ]]; then
         notify-send -r $id -u $urgency -a "battery" "Unplugged [$bat_perc%]"
     fi
     bat_prev_status=$bat_status
-    echo $bat_prev_status > /tmp/$bat_log_file
+    echo $bat_prev_status > $bat_log_file
 fi
 
 if [[ $bat_status == "+" ]]; then

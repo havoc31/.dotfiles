@@ -22,7 +22,7 @@
 #define BLOCKS(X) \
     X("", BLOCKS_DIR "block_layout", 1, 0) \
     X("", BLOCKS_DIR "block_ssid",  1, 0) \
-    X("", BLOCKS_DIR "block_date", 5, 0) \
+    X("", BLOCKS_DIR "block_date", 1, 0) \
     X("", BLOCKS_DIR "block_bat", 1, 0) \
     X("", BLOCKS_DIR "block_cpu", 1, 0) \
     X("", BLOCKS_DIR "block_temp", 1, 0) \
