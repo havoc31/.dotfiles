@@ -5,3 +5,7 @@ if status is-interactive
 end
 
 zoxide init fish | source
+
+# Exports
+export EDITOR="nvim"
+export MANPAGER="nvim +Man!"

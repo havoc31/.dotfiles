@@ -29,6 +29,6 @@
     X("", BLOCKS_DIR "block_disk", 1, 0) \
     X("", BLOCKS_DIR "block_mem", 1, 0) \
     X("", BLOCKS_DIR "block_bright", 1, 0) \
-    X("", BLOCKS_DIR "block_vol", 1, 0)
+    X("", BLOCKS_DIR "block_vol", 2, 0) \
 
 #endif  // CONFIG_H

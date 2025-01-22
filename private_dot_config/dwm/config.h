@@ -151,10 +151,17 @@ static const Rule rules[] = {
     RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
     RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
     RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+
     RULE(.class = "Nsxiv", .instance = "nsxiv", .isfloating = 1)
     RULE(.class = "Zathura", .instance = "org.pwmt.zathura", .isfloating = 1)
-    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
     RULE(.class = "pavucontrol", .instance = "pavucontrol", .isfloating = 1)
+    RULE(.class = "Blueman-manager", .instance = "blueman-manager", .isfloating = 1)
+    RULE(.class = "Lxappearance", .instance = "lxappearance", .isfloating = 1)
+
+    RULE(.class = "zoom", .instance = "zoom", .isfloating = 1, .tags = 1 << 3)
+
+    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
+    RULE(.class = "floorp", .instance = "Navigator", .tags = 1 << 0) 
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as

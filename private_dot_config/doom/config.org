@@ -5,7 +5,7 @@ Visual setting of Doom Emacs
 
 #+begin_src emacs-lisp
 (setq doom-theme 'modus-vivendi)
-(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'normal))
+(setq doom-font (font-spec :family "Fira Code Nerd Font" :size 18 :weight 'normal))
 #+end_src
 
 
@@ -292,12 +292,12 @@ Neotree is a file tree viewer.  When you open neotree, it jumps to the current f
 | neotree- dir   | /Open directory in neotree/ | SPC d n    |
 
 #+BEGIN_SRC emacs-lisp
-(after! neotree
-  (setq neo-smart-open t
-        neo-window-fixed-size nil))
-(after! doom-themes
-  (setq doom-neotree-enable-variable-pitch t))
-(map! :leader
-      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
-      :desc "Open directory in neotree"  "d n" #'neotree-dir)
+ ; (after! neotree
+;;   (setq neo-smart-open t
+;;         neo-window-fixed-size nil))
+;; (after! doom-themes
+;;   (setq doom-neotree-enable-variable-pitch t))
+;; (map! :leader
+;;       :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
+;;       :desc "Open directory in neotree"  "d n" #'neotree-dir)
 #+END_SRC

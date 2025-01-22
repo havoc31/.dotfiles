@@ -1,5 +1,5 @@
 (setq doom-theme 'modus-vivendi)
-(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'normal))
+(setq doom-font (font-spec :family "Fira Code Nerd Font" :size 18 :weight 'normal))
 
 (setq bookmark-default-file "~/.config/doom/bookmarks")
 
@@ -119,11 +119,11 @@
                      ("https://betanews.com/feed" betanews linux)
                      ("http://lxer.com/module/newswire/headlines.rss" lxer linux))))
 
-(after! neotree
-  (setq neo-smart-open t
-        neo-window-fixed-size nil))
-(after! doom-themes
-  (setq doom-neotree-enable-variable-pitch t))
-(map! :leader
-      :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
-      :desc "Open directory in neotree"  "d n" #'neotree-dir)
+; (after! neotree
+;;   (setq neo-smart-open t
+;;         neo-window-fixed-size nil))
+;; (after! doom-themes
+;;   (setq doom-neotree-enable-variable-pitch t))
+;; (map! :leader
+;;       :desc "Toggle neotree file viewer" "t n" #'neotree-toggle
+;;       :desc "Open directory in neotree"  "d n" #'neotree-dir)
