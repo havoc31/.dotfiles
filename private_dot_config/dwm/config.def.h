@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* Helper macros for spawning commands */
-#define SHCMD(CMD) { .v = (const char*[]){ "/bin/sh", "-c", CMD, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define CMD(...)   { .v = (const char*[]){ __VA_ARGS__, NULL } }
 
 /* Helper macros for spawning custom scripts for dwm */
@@ -13,7 +13,7 @@
 
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
-static const unsigned int snap           = 5;  /* snap pixel */
+static const unsigned int snap           = 32;  /* snap pixel */
 static const char autostartblocksh[]     = "autostart_blocking.sh";
 static const char autostartsh[]          = "autostart.sh";
 static const char dwmdir[]               = "dwm";
@@ -21,7 +21,7 @@ static const char localshare[]           = ".local/share";
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
 /* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
-static const int statusmon               = 'A';
+static const int statusmon               = -1;
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 
@@ -76,16 +76,16 @@ static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
 static char *colors[][ColCount] = {
-    /*                       fg                bg                border                float */
-    [SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
-    [SchemeSel]          = { selfgcolor,       selbgcolor,       selbordercolor,       selfloatcolor },
-    [SchemeTitleNorm]    = { titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor },
-    [SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
-    [SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
-    [SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
-    [SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
-    [SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
-    [SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
+	/*                       fg                bg                border                float */
+	[SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
+	[SchemeSel]          = { selfgcolor,       selbgcolor,       selbordercolor,       selfloatcolor },
+	[SchemeTitleNorm]    = { titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor },
+	[SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
+	[SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
+	[SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
+	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
+	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
+	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 };
 
 /* Tags
@@ -117,9 +117,9 @@ static char *colors[][ColCount] = {
  */
 static char *tagicons[][NUMTAGS] =
 {
-    [DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-    [ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
-    [ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
+	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
+	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
 /* There are two options when it comes to per-client rules:
@@ -141,19 +141,34 @@ static char *tagicons[][NUMTAGS] =
  * the patches you enable.
  */
 static const Rule rules[] = {
-    /* xprop(1):
-     *    WM_CLASS(STRING) = instance, class
-     *    WM_NAME(STRING) = title
-     *    WM_WINDOW_ROLE(STRING) = role
-     *    _NET_WM_WINDOW_TYPE(ATOM) = wintype
-     */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
-    RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-    RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
-    RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+	/* xprop(1):
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+	 *	WM_WINDOW_ROLE(STRING) = role
+	 *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
+	 */
+	RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
+	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
+	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+
     RULE(.class = "Nsxiv", .instance = "nsxiv", .isfloating = 1)
     RULE(.class = "Zathura", .instance = "org.pwmt.zathura", .isfloating = 1)
+    RULE(.class = "pavucontrol", .instance = "pavucontrol", .isfloating = 1)
+    RULE(.class = "Blueman-manager", .instance = "blueman-manager", .isfloating = 1)
+    RULE(.class = "Lxappearance", .instance = "lxappearance", .isfloating = 1)
 
+    RULE(.class = "zoom", .instance = "zoom", .isfloating = 1, .tags = 1 << 3)
+
+    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
+    RULE(.class = "floorp", .instance = "Navigator", .tags = 1 << 0) 
+
+};
+
+static const MonitorRule monrules[] = {
+	/* monitor  tag   layout  mfact  nmaster  showbar  topbar */
+	{  1,       -1,   2,      -1,    -1,      -1,      -1     }, // use a different layout for the second monitor
+	{  -1,      -1,   0,      -1,    -1,      -1,      -1     }, // default
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as
@@ -169,13 +184,13 @@ static const Rule rules[] = {
  *    name - does nothing, intended for visual clue and for logging / debugging
  */
 static const BarRule barrules[] = {
-    /* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
-    { -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
-    { -1,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-    { -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
-    { statusmon, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
-    { -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
-    { statusmon, 1,     BAR_ALIGN_CENTER, width_status2d_es,        draw_status2d_es,       click_status2d,          NULL,                    "status2d_es" },
+	/* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
+	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
+	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
+	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
+	{ -1, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
+	{ -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
+	{ -1, 1,     BAR_ALIGN_CENTER, width_status2d_es,        draw_status2d_es,       click_status2d,          NULL,                    "status2d_es" },
 };
 
 /* layout(s) */
@@ -185,10 +200,13 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
-    /* symbol     arrange function */
-    { "[]=",      tile },    /* first entry is default */
-    { "><>",      NULL },    /* no layout function means floating behavior */
-    { "[M]",      monocle },
+	/* symbol     arrange function */
+	{ "[]=",      tile },    /* first entry is default */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[M]",      monocle },
+	{ "|||",      col },
+	{ "HHH",      grid },
+	{ "---",      horizgrid },
 };
 
 /* key definitions */
@@ -214,7 +232,6 @@ static const char *dmenucmd[] = {
     NULL
 };
 static const char *termcmd[]  = { "st", NULL };
-
 
 /* Custom dwm scripts */
 #define brightupcmd     DWM_SCRIPT("bright_up")
@@ -264,6 +281,10 @@ static const Keychord *keychords[] = {
     KEYCHORD(1, {{ MODKEY, XK_t }},                     setlayout,              {.v = &layouts[0]})
     KEYCHORD(1, {{ MODKEY, XK_f }},                     setlayout,              {.v = &layouts[1]})
     KEYCHORD(1, {{ MODKEY, XK_m }},                     setlayout,              {.v = &layouts[2]})
+    KEYCHORD(1, {{ MODKEY, XK_c }},                     setlayout,              {.v = &layouts[3]})
+    KEYCHORD(1, {{ MODKEY, XK_g }},                     setlayout,              {.v = &layouts[4]})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_h }},           setlayout,              {.v = &layouts[5]})
+
     KEYCHORD(1, {{ MODKEY, XK_space }},                 setlayout,              {0})
     KEYCHORD(1, {{ MODKEY|ShiftMask, XK_space }},       togglefloating,         {0})
     KEYCHORD(1, {{ MODKEY, XK_0 }},                     view,                   {.ui = ~0 })
@@ -312,19 +333,19 @@ static const Keychord *keychords[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
-    /* click                event mask           button          function        argument */
-    { ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
-    { ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
-    { ClkWinTitle,          0,                   Button1,        togglewin,      {0} },
-    { ClkWinTitle,          0,                   Button3,        showhideclient, {0} },
-    { ClkWinTitle,          0,                   Button2,        zoom,           {0} },
-    { ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
-    { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
-    { ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
-    { ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
-    { ClkTagBar,            0,                   Button1,        view,           {0} },
-    { ClkTagBar,            0,                   Button3,        toggleview,     {0} },
-    { ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
-    { ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
+	/* click                event mask           button          function        argument */
+	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,                   Button1,        togglewin,      {0} },
+	{ ClkWinTitle,          0,                   Button3,        showhideclient, {0} },
+	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
+	{ ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
+	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
+	{ ClkTagBar,            0,                   Button1,        view,           {0} },
+	{ ClkTagBar,            0,                   Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
 };
 

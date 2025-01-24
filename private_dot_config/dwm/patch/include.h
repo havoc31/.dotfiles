@@ -13,13 +13,18 @@
 #include "bar_wintitleactions.h"
 
 /* Other patches */
+#include "aspectresize.h"
 #include "autostart.h"
-#include "hidewin.h"
+#include "pertag.h"
 #include "xrdb.h"
-/* Restarting patches */
+#include "hidewin.h"
+/* Restarting patches*/
 #include "restartsig.h"
 #include "restoresession.h"
 /* Layouts */
+#include "layout_columns.h"
+#include "layout_grid.h"
+#include "layout_horizgrid.h"
 #include "layout_monocle.h"
 #include "layout_tile.h"
 
