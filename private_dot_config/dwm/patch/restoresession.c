@@ -46,5 +46,5 @@ restoreSession(void)
 	fclose(fr);
 	
 	// delete a file
-	remove(SESSION_FILE);
+    remove(SESSION_FILE);
 }

@@ -160,8 +160,9 @@ static const Rule rules[] = {
 
     RULE(.class = "zoom", .instance = "zoom", .isfloating = 1, .tags = 1 << 3)
 
-    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
     RULE(.class = "floorp", .instance = "Navigator", .tags = 1 << 0) 
+    RULE(.class = "Emacs", .instance = "emacs", .tags = 1 << 1)
+    RULE(.class = "obsidian", .instance = "obsidian", .tags = 1 << 2)
 
 };
 
@@ -184,13 +185,13 @@ static const MonitorRule monrules[] = {
  *    name - does nothing, intended for visual clue and for logging / debugging
  */
 static const BarRule barrules[] = {
-    /* monitor   bar    alignment         widthfunc                 drawfunc                clickfunc                hoverfunc                name */
-    { -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
-    { 0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
-    { -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
-    { -1, 0,     BAR_ALIGN_RIGHT,  width_status2d,           draw_status2d,          click_status2d,          NULL,                    "status2d" },
-    { -1,        0,     BAR_ALIGN_NONE,   width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,                    "awesomebar" },
-    { -1, 1,     BAR_ALIGN_CENTER, width_status2d_es,        draw_status2d_es,       click_status2d,          NULL,                    "status2d_es" },
+    /* monitor   bar    alignment          widthfunc                 drawfunc                clickfunc                hoverfunc     name */
+    { -1,        0,     BAR_ALIGN_LEFT,    width_tags,               draw_tags,              click_tags,              hover_tags,   "tags"        },
+    {  0,        0,     BAR_ALIGN_RIGHT,   width_systray,            draw_systray,           click_systray,           NULL,         "systray"     },
+    { -1,        0,     BAR_ALIGN_LEFT,    width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,         "layout"      },
+    { -1,        0,     BAR_ALIGN_RIGHT,   width_status2d,           draw_status2d,          click_status2d,          NULL,         "status2d"    },
+    { -1,        0,     BAR_ALIGN_NONE,    width_awesomebar,         draw_awesomebar,        click_awesomebar,        NULL,         "awesomebar"  },
+    { -1,        1,     BAR_ALIGN_CENTER,  width_status2d_es,        draw_status2d_es,       click_status2d,          NULL,         "status2d_es" },
 };
 /* layout(s) */
 static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
@@ -242,11 +243,10 @@ static const char *termcmd[]  = { "st", NULL };
 /* Custom dwm scripts */
 
 /* Usefult scripts and commands */
-#define screenareacmd "flameshot gui"
-#define screenfullcmd "flameshot full"
+#define screenareacmd SHCMD("flameshot gui")
+#define screenfullcmd SHCMD("flameshot full")
 
-#define xscreensaverlock "xscreensaver-command -lock" 
-
+#define xscreensaverlock SHCMD("xscreensaver-command -lock") 
 
 /* Script to generate RULE(...) macro for window, copy to clipboard */
 #define XPROP_RULE "xprop | awk '/^WM_CLASS/{sub(/.* =/, \"\"); sub(/,/, \"\");" \
@@ -255,69 +255,59 @@ static const char *termcmd[]  = { "st", NULL };
 /* Usefult scripts and commands */
 
 static const Keychord *keychords[] = {
-    /* keys                                                 function                argument */
-    KEYCHORD(1, {{ MODKEY, XK_p }},                     spawn,                  {.v = dmenucmd })
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_Return }},      spawn,                  {.v = termcmd })
-    KEYCHORD(1, {{ MODKEY, XK_b }},                     togglebar,              {0})
-    KEYCHORD(1, {{ MODKEY, XK_j }},                     focusstack,             {.i = +1 })
-    KEYCHORD(1, {{ MODKEY, XK_k }},                     focusstack,             {.i = -1 })
-    KEYCHORD(1, {{ MODKEY, XK_i }},                     incnmaster,             {.i = +1 })
-    KEYCHORD(1, {{ MODKEY, XK_d }},                     incnmaster,             {.i = -1 })
-    KEYCHORD(1, {{ MODKEY, XK_h }},                     setmfact,               {.f = -0.05})
-    KEYCHORD(1, {{ MODKEY, XK_l }},                     setmfact,               {.f = +0.05})
-    KEYCHORD(1, {{ MODKEY, XK_Return }},                zoom,                   {0})
-    KEYCHORD(1, {{ MODKEY, XK_Tab }},                   view,                   {0})
-    KEYCHORD(1, {{ MODKEY|ControlMask, XK_z }},         showhideclient,         {0})
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_c }},           killclient,             {0})
-
-    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_q}},           quit,        {0})
-    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_r}},           quit,        {1})
-
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_F5 }},          xrdb,                   {.v = NULL })
-
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_i }},           spawn,                  SHCMD(XPROP_RULE))
-
-    KEYCHORD(1, {{ MODKEY, XK_t }},                     setlayout,              {.v = &layouts[0]})
-    KEYCHORD(1, {{ MODKEY, XK_f }},                     setlayout,              {.v = &layouts[1]})
-    KEYCHORD(1, {{ MODKEY, XK_m }},                     setlayout,              {.v = &layouts[2]})
-    KEYCHORD(1, {{ MODKEY, XK_c }},                     setlayout,              {.v = &layouts[3]})
-    KEYCHORD(1, {{ MODKEY, XK_g }},                     setlayout,              {.v = &layouts[4]})
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_h }},           setlayout,              {.v = &layouts[5]})
-
-    KEYCHORD(1, {{ MODKEY, XK_space }},                 setlayout,              {0})
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_space }},       togglefloating,         {0})
-    KEYCHORD(1, {{ MODKEY, XK_0 }},                     view,                   {.ui = ~0 })
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_0 }},           tag,                    {.ui = ~0 })
-    KEYCHORD(1, {{ MODKEY, XK_comma }},                 focusmon,               {.i = -1 })
-    KEYCHORD(1, {{ MODKEY, XK_period }},                focusmon,               {.i = +1 })
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_comma }},       tagmon,                 {.i = -1 })
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_period }},      tagmon,                 {.i = +1 })
-    
+    /* keys                                                     function                argument */
+    KEYCHORD(1, {{ MODKEY, XK_p }},                             spawn,                  {.v = dmenucmd })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_Return }},              spawn,                  {.v = termcmd })
+    KEYCHORD(1, {{ MODKEY, XK_b }},                             togglebar,              {0})
+    KEYCHORD(1, {{ MODKEY, XK_j }},                             focusstack,             {.i = +1 })
+    KEYCHORD(1, {{ MODKEY, XK_k }},                             focusstack,             {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_i }},                             incnmaster,             {.i = +1 })
+    KEYCHORD(1, {{ MODKEY, XK_d }},                             incnmaster,             {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_h }},                             setmfact,               {.f = -0.05})
+    KEYCHORD(1, {{ MODKEY, XK_l }},                             setmfact,               {.f = +0.05})
+    KEYCHORD(1, {{ MODKEY, XK_Return }},                        zoom,                   {0})
+    KEYCHORD(1, {{ MODKEY, XK_Tab }},                           view,                   {0})
+    KEYCHORD(1, {{ MODKEY|ControlMask, XK_z }},                 showhideclient,         {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_c }},                   killclient,             {0})
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_q}},        quit,                   {0})
+    KEYCHORD(2, {{ MODKEY|ShiftMask, XK_q }, {0, XK_r}},        quit,                   {1})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_F5 }},                  xrdb,                   {.v = NULL })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_i }},                   spawn,                  SHCMD(XPROP_RULE))
+    /*Layouts*/
+    KEYCHORD(1, {{ MODKEY, XK_t }},                             setlayout,              {.v = &layouts[0]})
+    KEYCHORD(1, {{ MODKEY, XK_f }},                             setlayout,              {.v = &layouts[1]})
+    KEYCHORD(1, {{ MODKEY, XK_m }},                             setlayout,              {.v = &layouts[2]})
+    KEYCHORD(1, {{ MODKEY, XK_c }},                             setlayout,              {.v = &layouts[3]})
+    KEYCHORD(1, {{ MODKEY, XK_g }},                             setlayout,              {.v = &layouts[4]})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_h }},                   setlayout,              {.v = &layouts[5]})
+    KEYCHORD(1, {{ MODKEY, XK_space }},                         setlayout,              {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_space }},               togglefloating,         {0})
+    KEYCHORD(1, {{ MODKEY, XK_0 }},                             view,                   {.ui = ~0 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_0 }},                   tag,                    {.ui = ~0 })
+    KEYCHORD(1, {{ MODKEY, XK_comma }},                         focusmon,               {.i = -1 })
+    KEYCHORD(1, {{ MODKEY, XK_period }},                        focusmon,               {.i = +1 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_comma }},               tagmon,                 {.i = -1 })
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_period }},              tagmon,                 {.i = +1 })
     /*Hide win patch*/
-    KEYCHORD(1, {{ MODKEY, XK_o }},                     hidewin,                {0})
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_o }},           restorewin,             {0})
-    KEYCHORD(1, {{ MODKEY, XK_w }},                     hideotherwins,          {0})
-    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_w }},           restoreotherwins,       {0})
-
+    KEYCHORD(1, {{ MODKEY, XK_o }},                             hidewin,                {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_o }},                   restorewin,             {0})
+    KEYCHORD(1, {{ MODKEY, XK_w }},                             hideotherwins,          {0})
+    KEYCHORD(1, {{ MODKEY|ShiftMask, XK_w }},                   restoreotherwins,       {0})
     /*Volume*/
-    KEYCHORD(1, {{ MODKEY, XK_F1 }},                    spawn,                  volmutecmd)
-    KEYCHORD(1, {{ MODKEY, XK_F2 }},                    spawn,                  voldowncmd)
-    KEYCHORD(1, {{ MODKEY, XK_F3 }},                    spawn,                  volupcmd)
-
+    KEYCHORD(1, {{ 0, XF86XK_AudioMute }},                      spawn,                  volmutecmd)
+    KEYCHORD(1, {{ 0, XF86XK_AudioLowerVolume }},               spawn,                  voldowncmd)
+    KEYCHORD(1, {{ 0, XF86XK_AudioRaiseVolume }},               spawn,                  volupcmd)
     /*Brightness*/
-    KEYCHORD(1, {{ MODKEY, XK_F4 }},                    spawn,                  brightdowncmd)
-    KEYCHORD(1, {{ MODKEY, XK_F5 }},                    spawn,                  brightupcmd)
-
+    KEYCHORD(1, {{ 0, XF86XK_MonBrightnessDown }},              spawn,                  brightdowncmd)
+    KEYCHORD(1, {{ 0, XF86XK_MonBrightnessUp }},                spawn,                  brightupcmd)
     /*Screenshot*/
-    KEYCHORD(1, {{ MODKEY | ShiftMask, XK_Print }},     spawn,                  SHCMD(screenareacmd)) 
-    KEYCHORD(1, {{ MODKEY, XK_Print }},                 spawn,                  SHCMD(screenfullcmd)) 
-
+    KEYCHORD(1, {{ MODKEY | ShiftMask, XK_Print }},             spawn,                  screenareacmd) 
+    KEYCHORD(1, {{ MODKEY, XK_Print }},                         spawn,                  screenfullcmd) 
      /*Xscreensaver*/
-    KEYCHORD(1, {{ MODKEY | ShiftMask, XK_l }},         spawn,                  SHCMD(xscreensaverlock)) 
-
+    KEYCHORD(1, {{ MODKEY | ShiftMask, XK_l }},                 spawn,                  xscreensaverlock) 
     /*Doom Emacs*/
-    KEYCHORD(2, {{ MODKEY, XK_e }, { 0, XK_e }},        spawn,                  SHCMD("emacsclient -c -a 'emacs'")) 
-    
+    KEYCHORD(2, {{ MODKEY, XK_e }, { 0, XK_e }},                spawn,                  SHCMD("emacsclient -c -a 'emacs'")) 
+    /*Tags*/ 
     TAGKEYS(XK_1, 0)
     TAGKEYS(XK_2, 1)
     TAGKEYS(XK_3, 2)
